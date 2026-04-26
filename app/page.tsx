@@ -1,11 +1,12 @@
 "use client";
 
 import Navbar from "@/app/components/navbar";
+import Hero from "./components/Hero_Main";
 export default function Home() {
   return (
     <main>
-      <h1 className="text-green-700">Salam</h1>
       <Navbar />
+      <Hero />
     </main>
   );
 }
