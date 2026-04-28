@@ -134,9 +134,9 @@ export default function InboxPage() {
   }
 
   return (
-    <div className="flex h-[calc(100vh-64px)] md:h-[calc(100vh-0px)] overflow-hidden p-0 md:p-6 gap-0 md:gap-6 relative">
+    <div className="flex h-[calc(100vh-64px)] md:h-[calc(100vh-0)] overflow-hidden p-0 md:p-6 gap-0 md:gap-6 relative">
       {/* Decorative */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-primary/5 to-transparent rounded-full blur-[100px] pointer-events-none -z-10" />
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-linear-to-bl from-primary/5 to-transparent rounded-full blur-[100px] pointer-events-none -z-10" />
 
       {/* Conversations List */}
       <aside className="hidden md:flex w-[340px] flex-col bg-surface-container-lowest rounded-2xl overflow-hidden shrink-0"
@@ -281,7 +281,7 @@ export default function InboxPage() {
             ) : (
               <div key={msg.id} className="flex gap-3 max-w-[80%] ml-auto justify-end animate-[fadeSlideUp_0.3s_ease-out]">
                 <div className="flex flex-col gap-1 items-end">
-                  <div className="px-4 py-3 rounded-2xl rounded-br-sm bg-gradient-to-br from-primary to-primary-dim text-white text-sm leading-relaxed"
+                  <div className="px-4 py-3 rounded-2xl rounded-br-sm bg-linear-to-br from-primary to-primary-dim text-white text-sm leading-relaxed"
                     style={{ boxShadow: "0 2px 8px rgba(0,105,71,0.15)" }}
                   >
                     {msg.text}
