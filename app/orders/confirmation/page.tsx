@@ -70,7 +70,7 @@ export default function OrderConfirmationPage() {
               <div className="w-16 h-16 rounded-xl overflow-hidden mr-4 shrink-0 bg-primary-container/20 flex items-center justify-center text-primary">
                 <Icon name="functions" size={28} />
               </div>
-              <div className="flex-grow">
+              <div className="grow">
                 <div className="flex justify-between items-start mb-1">
                   <h3 className="font-headline font-bold text-on-surface">Calculus II Tutoring</h3>
                   <p className="font-headline font-bold text-on-surface">7,500 HUF</p>
