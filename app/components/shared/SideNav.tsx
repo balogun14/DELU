@@ -83,7 +83,7 @@ export default function SideNav() {
         {/* CTA */}
         <Link
           href="/sell/new"
-          className="w-full py-3 mt-4 bg-gradient-to-r from-primary to-primary-dim text-white rounded-full font-label font-bold text-sm text-center hover:brightness-110 active:scale-[0.98] transition-all"
+          className="w-full py-3 mt-4 bg-linear-to-r from-primary to-primary-dim text-white rounded-full font-label font-bold text-sm text-center hover:brightness-110 active:scale-[0.98] transition-all"
           style={{
             boxShadow: "0 4px 14px 0 rgba(0,105,71,0.2)",
           }}
