@@ -3,7 +3,7 @@
 import Icon from "@/app/components/shared/Icon";
 import Link from "next/link";
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 const liveListings = [
   { title: "Organic Chem Textbook", seller: "Alex C.", price: "15,000", tag: "Book", tagBg: "bg-secondary-container/40 text-on-secondary-container" },
@@ -19,7 +19,7 @@ const voices = [
   { quote: "Got my braids done for half the salon price. By a student!", name: "Chioma A.", context: "Corvinus, Business", icon: "content_cut" },
 ];
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -29,7 +29,7 @@ const containerVariants = {
   },
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
@@ -78,7 +78,7 @@ export default function Home() {
 
       {/* ─── Hero: Editorial, Asymmetric ─── */}
       <section className="pt-28 md:pt-36 pb-16 md:pb-24 px-6 relative">
-        <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-b from-primary-container/10 via-transparent to-transparent rounded-full blur-[80px] pointer-events-none" />
+        <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-linear-to-b from-primary-container/10 via-transparent to-transparent rounded-full blur-[80px] pointer-events-none" />
 
         <motion.div 
           initial="hidden"
