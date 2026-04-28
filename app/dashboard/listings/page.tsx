@@ -18,16 +18,19 @@ const listings = [
     id: "lst-1", title: "Calculus II Tutoring", price: "4,500 HUF", priceUnit: "/hr",
     type: "Service", status: "Active", views: 128, favorites: 4,
     description: "Experienced engineering student offering 1-on-1 sessions. Midterms prep available.",
+    image: "/images/listing_braids.png", // Using braids as service placeholder
   },
   {
     id: "lst-2", title: "Used Dorm Fridge", price: "12,000 HUF", priceUnit: "",
     type: "Product", status: "Active", views: 342, favorites: 12,
     description: "Perfect condition, 45L capacity. Moving out, need it gone by Friday.",
+    image: "/images/listing_textbook.png",
   },
   {
     id: "lst-3", title: "Homemade Brownies", price: "1,500 HUF", priceUnit: "/box",
     type: "Food", status: "Pending Approval", views: 0, favorites: 0,
     description: "Freshly baked batch for finals week. Contains walnuts. Delivery on campus.",
+    image: "/images/listing_jollof.png",
   },
 ];
 
@@ -82,65 +85,57 @@ export default function MyListingsPage() {
             const isFood = lst.type === "Food";
             const isPending = lst.status === "Pending Approval";
             return (
-              <div key={lst.id} className="bg-surface-container-lowest rounded-2xl overflow-hidden flex flex-col group hover:translate-y-[-2px] transition-all"
-                style={isFood ? { border: "1px solid rgba(248,160,16,0.3)" } : undefined}
-              >
-                <div className="h-48 relative overflow-hidden bg-surface-container-highest">
-                  <div className={`w-full h-full flex items-center justify-center ${
-                    isFood ? "bg-gradient-to-br from-tertiary/10 to-tertiary-container/10 text-tertiary"
-                    : lst.type === "Service" ? "bg-gradient-to-br from-primary/10 to-primary-container/10 text-primary"
-                    : "bg-gradient-to-br from-secondary/5 to-secondary-container/5 text-secondary"
-                  }`}>
-                    <Icon
-                      name={isFood ? "bakery_dining" : lst.type === "Service" ? "school" : "inventory_2"}
-                      size={48}
-                      className="opacity-20 group-hover:scale-110 transition-transform duration-500"
-                    />
+              <div key={lst.id} className="group">
+                <Link href={`/marketplace/items/${lst.id}`} className="block bg-surface-container-lowest rounded-2xl overflow-hidden flex flex-col group hover:translate-y-[-4px] transition-all duration-300 shadow-sm hover:shadow-md h-full"
+                  style={isFood ? { border: "1px solid rgba(248,160,16,0.1)" } : { border: "1px solid rgba(0,0,0,0.03)" }}
+                >
+                  <div className="h-48 relative overflow-hidden bg-surface-container">
+                    <img src={lst.image} alt={lst.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                    <div className="absolute top-4 left-4">
+                      <span className={`bg-surface/90 backdrop-blur-md text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full ${
+                        isFood ? "text-tertiary" : "text-on-surface"
+                      }`}>
+                        {lst.type}
+                      </span>
+                    </div>
+                    <div className="absolute top-4 right-4">
+                      <span className={`backdrop-blur-md text-[10px] font-bold px-3 py-1 rounded-full flex items-center gap-1.5 uppercase tracking-widest ${
+                        isPending
+                          ? "bg-tertiary-container/90 text-on-tertiary-container"
+                          : "bg-primary-container/90 text-on-primary-container"
+                      }`}>
+                        {isPending ? (
+                          <><Icon name="hourglass_empty" size={12} /> Pending</>
+                        ) : (
+                          <><span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" /> Active</>
+                        )}
+                      </span>
+                    </div>
                   </div>
-                  <div className="absolute top-4 left-4">
-                    <span className={`bg-surface/80 backdrop-blur-md text-xs font-semibold px-3 py-1 rounded-full ${
-                      isFood ? "text-tertiary" : "text-on-surface"
-                    }`}>
-                      {lst.type}
-                    </span>
-                  </div>
-                  <div className="absolute top-4 right-4">
-                    <span className={`backdrop-blur-md text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1 ${
-                      isPending
-                        ? "bg-tertiary-container/90 text-on-tertiary-container"
-                        : "bg-primary-container/90 text-on-primary-container"
-                    }`}>
-                      {isPending ? (
-                        <><Icon name="hourglass_empty" size={14} /> Pending Approval</>
-                      ) : (
-                        <><span className="w-2 h-2 rounded-full bg-primary-dim" /> Active</>
+                  <div className="p-6 flex-1 flex flex-col">
+                    <div className="flex justify-between items-start mb-2 gap-4">
+                      <h3 className="font-headline text-lg font-extrabold text-on-surface leading-tight group-hover:text-primary transition-colors">{lst.title}</h3>
+                      <span className={`font-headline font-bold whitespace-nowrap ${isFood ? "text-tertiary" : "text-primary"}`}>
+                        {lst.price}{lst.priceUnit && <span className="text-xs text-on-surface-variant font-normal"> {lst.priceUnit}</span>}
+                      </span>
+                    </div>
+                    <p className="text-sm text-on-surface-variant mb-6 line-clamp-2 font-body leading-relaxed">{lst.description}</p>
+                    <div className="flex items-center gap-4 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mt-auto bg-surface-container-low/50 px-4 py-3 rounded-xl mb-4">
+                      <span className="flex items-center gap-1.5"><Icon name="visibility" size={14} className="opacity-60" /> {lst.views} Views</span>
+                      <span className="w-1 h-1 rounded-full bg-outline-variant/30" />
+                      <span className="flex items-center gap-1.5"><Icon name="favorite" size={14} className="opacity-60" /> {lst.favorites} Saves</span>
+                    </div>
+                    <div className="flex gap-2">
+                      <button onClick={(e) => { e.preventDefault(); /* Edit logic */ }} className="flex-1 bg-surface-container text-on-surface font-label text-[10px] font-bold uppercase tracking-widest py-2.5 rounded-lg hover:bg-surface-container-high transition-colors">Edit</button>
+                      {!isPending && (
+                        <button onClick={(e) => { e.preventDefault(); /* Mark sold logic */ }} className="flex-1 bg-secondary text-on-secondary font-label text-[10px] font-bold uppercase tracking-widest py-2.5 rounded-lg hover:brightness-110 transition-all">Mark Sold</button>
                       )}
-                    </span>
+                      <button onClick={(e) => { e.preventDefault(); /* Delete logic */ }} className="w-10 bg-error/10 text-error flex items-center justify-center rounded-lg hover:bg-error/20 transition-colors">
+                        <Icon name="delete" size={18} />
+                      </button>
+                    </div>
                   </div>
-                </div>
-                <div className="p-6 flex-1 flex flex-col">
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="font-headline text-lg font-bold text-on-surface leading-tight">{lst.title}</h3>
-                    <span className={`font-headline font-bold whitespace-nowrap ml-4 ${isFood ? "text-tertiary" : "text-primary"}`}>
-                      {lst.price}{lst.priceUnit && <span className="text-xs text-on-surface-variant font-normal"> {lst.priceUnit}</span>}
-                    </span>
-                  </div>
-                  <p className="text-sm text-on-surface-variant mb-4 line-clamp-2 font-body">{lst.description}</p>
-                  <div className="flex items-center gap-4 text-xs text-on-surface-variant mt-auto bg-surface-container-low p-3 rounded-xl mb-4">
-                    <span className="flex items-center gap-1.5"><Icon name="visibility" size={16} /> {lst.views} Views</span>
-                    <span className="w-1 h-1 rounded-full bg-outline-variant" />
-                    <span className="flex items-center gap-1.5"><Icon name="favorite" size={16} /> {lst.favorites} Favorites</span>
-                  </div>
-                  <div className="flex gap-2">
-                    <button className="flex-1 bg-surface-container text-on-surface font-medium text-sm py-2 rounded-lg hover:bg-surface-container-high transition-colors">Edit</button>
-                    {!isPending && (
-                      <button className="flex-1 bg-secondary-container text-on-secondary-container font-medium text-sm py-2 rounded-lg hover:brightness-95 transition-colors">Mark Sold</button>
-                    )}
-                    <button className="w-10 bg-error-container/20 text-error flex items-center justify-center rounded-lg hover:bg-error-container/40 transition-colors">
-                      <Icon name="delete" size={18} />
-                    </button>
-                  </div>
-                </div>
+                </Link>
               </div>
             );
           })}
