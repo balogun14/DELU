@@ -6,6 +6,8 @@ import { useToastStore } from "@/lib/store/toast";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { products, bundles } from "@/lib/mock/products";
+import { foodItems } from "@/lib/mock/food";
+import { services } from "@/lib/mock/services";
 
 export default function ItemDetailPage() {
   const params = useParams();
@@ -16,8 +18,38 @@ export default function ItemDetailPage() {
   const addToast = useToastStore((state) => state.addToast);
 
   // Find the item from our mock data or use a fallback
-  const allItems = [...products, ...(bundles as any[])];
-  const mockProduct = allItems.find(p => p.id === id);
+  const allItems = [
+    ...products, 
+    ...bundles.map(b => ({ ...b, condition: b.condition || "New" })), 
+    ...foodItems.map(f => ({ 
+      ...f, 
+      category: "Food & Drink", 
+      condition: "Fresh", 
+      views: f.featured ? 542 : 120, 
+      favorites: f.featured ? 42 : 12,
+      seller: {
+        ...f.seller,
+        verified: true,
+        responseTime: "~10 min",
+        listings: 5
+      }
+    })),
+    ...services.map(s => ({ 
+      ...s, 
+      seller: { 
+        ...s.provider, 
+        rating: s.rating, 
+        reviews: s.reviews, 
+        responseTime: "~15 min", 
+        listings: 4,
+        verified: s.provider.verified ?? true
+      },
+      condition: "Professional",
+      views: 85,
+      favorites: 5
+    }))
+  ];
+  const mockProduct = allItems.find(p => p.id === id) as any;
   
   const item = {
     id,
