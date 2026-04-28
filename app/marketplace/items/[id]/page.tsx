@@ -4,38 +4,42 @@ import Icon from "@/app/components/shared/Icon";
 import { useCartStore } from "@/lib/store/cart";
 import { useToastStore } from "@/lib/store/toast";
 import Link from "next/link";
-import { use } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { products, bundles } from "@/lib/mock/products";
 
-export default function ItemDetailPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const { id } = use(params);
+export default function ItemDetailPage() {
+  const params = useParams();
+  const router = useRouter();
+  const id = params?.id as string;
+  
   const addItem = useCartStore((state) => state.addItem);
   const addToast = useToastStore((state) => state.addToast);
 
-  // Mock data for any item
+  // Find the item from our mock data or use a fallback
+  const allItems = [...products, ...(bundles as any[])];
+  const mockProduct = allItems.find(p => p.id === id);
+  
   const item = {
     id,
-    title: "Authentic Nigerian Jollof",
-    price: 3450,
-    currency: "HUF",
-    description: "Spicy, smoky, and deeply flavorful. Served with fried plantains and marinated chicken. Made with fresh ingredients sourced locally.",
-    category: "Food & Drink",
-    condition: "Fresh",
-    image: "",
-    seller: {
+    title: mockProduct?.title || "Authentic Nigerian Jollof",
+    price: mockProduct?.price || 3450,
+    currency: mockProduct?.currency || "HUF",
+    description: mockProduct?.description || "Spicy, smoky, and deeply flavorful. Served with fried plantains and marinated chicken. Made with fresh ingredients sourced locally.",
+    category: mockProduct?.category || "Food & Drink",
+    condition: mockProduct?.condition || "Fresh",
+    image: mockProduct?.image || "/images/listing_jollof.png",
+    seller: mockProduct?.seller || {
       name: "Amina S.",
+      avatar: "",
       rating: 4.9,
       reviews: 42,
       verified: true,
       responseTime: "~5 min",
       listings: 8,
     },
-    tags: ["African", "Spicy", "Halal"],
-    views: 342,
-    favorites: 18,
+    tags: mockProduct?.tags || ["African", "Spicy", "Halal"],
+    views: mockProduct?.views || 342,
+    favorites: mockProduct?.favorites || 18,
   };
 
   const handleAddToCart = () => {
@@ -53,26 +57,42 @@ export default function ItemDetailPage({
   };
 
   return (
-    <div className="px-6 md:px-12 py-8 max-w-6xl mx-auto">
-      {/* Breadcrumbs */}
-      <nav className="flex items-center gap-2 text-sm font-body text-on-surface-variant mb-6">
-        <Link href="/marketplace/food" className="hover:text-primary transition-colors">
-          Food
-        </Link>
-        <Icon name="chevron_right" size={16} />
-        <span className="text-on-surface font-medium truncate">{item.title}</span>
-      </nav>
+    <div className="px-6 md:px-12 py-8 max-w-6xl mx-auto space-y-6">
+      {/* Top Nav */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <nav className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">
+          <Link href="/marketplace/products" className="hover:text-primary transition-colors">
+            Marketplace
+          </Link>
+          <Icon name="chevron_right" size={14} className="opacity-40" />
+          <span className="hover:text-primary transition-colors cursor-pointer">{item.category}</span>
+          <Icon name="chevron_right" size={14} className="opacity-40" />
+          <span className="text-on-surface truncate max-w-[150px] md:max-w-none">{item.title}</span>
+        </nav>
+        
+        <button 
+          onClick={() => router.back()}
+          className="flex items-center gap-2 text-xs font-bold text-on-surface-variant hover:text-primary transition-colors group"
+        >
+          <div className="w-8 h-8 rounded-full bg-surface-container-low flex items-center justify-center group-hover:bg-primary/10 transition-colors">
+            <Icon name="arrow_back" size={16} />
+          </div>
+          Go Back
+        </button>
+      </div>
 
       <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
         {/* Image Area */}
         <div className="w-full lg:w-3/5">
-          <div className="bg-surface-container-lowest rounded-2xl overflow-hidden relative aspect-4/3">
-            <div className="w-full h-full bg-linear-to-br from-tertiary/10 to-tertiary-container/10 flex items-center justify-center text-tertiary">
-              <Icon name="restaurant" size={80} className="opacity-20" />
-            </div>
+          <div className="bg-surface-container-lowest rounded-2xl overflow-hidden relative aspect-4/3 group">
+            <img 
+              src={item.image} 
+              alt={item.title} 
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+            />
             {/* Badges */}
             <div className="absolute top-4 left-4 flex gap-2">
-              {item.tags.map((tag) => (
+              {item.tags.map((tag: string) => (
                 <span
                   key={tag}
                   className="bg-surface/80 backdrop-blur-sm text-on-surface text-xs font-bold px-3 py-1 rounded-full"
