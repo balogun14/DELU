@@ -1,94 +1,249 @@
-import Icon from "@/app/components/shared/Icon";
-import type { Metadata } from "next";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Analytics",
-  description: "Track your ADEL marketplace performance — revenue, views, and satisfaction metrics.",
-};
+import Icon from "@/app/components/shared/Icon";
+import { motion, Variants } from "framer-motion";
+import { useState, useEffect } from "react";
 
 const kpis = [
-  { label: "Total Revenue", value: "$4,250", decimal: ".00", icon: "account_balance_wallet", iconBg: "bg-emerald-50", iconColor: "text-primary", trend: "12.5%", trendUp: true, trendLabel: "vs last month" },
-  { label: "Active Listings", value: "24", decimal: "", icon: "library_books", iconBg: "bg-blue-50", iconColor: "text-secondary", trend: "3 new", trendUp: true, trendLabel: "this week" },
-  { label: "Total Profile Views", value: "1,842", decimal: "", icon: "visibility", iconBg: "bg-purple-50", iconColor: "text-purple-600", trend: "2.1%", trendUp: false, trendLabel: "vs last month" },
-  { label: "Satisfaction", value: "4.9", decimal: "/5", icon: "kid_star", iconBg: "bg-tertiary/10", iconColor: "text-tertiary", trend: "", trendUp: false, trendLabel: "Based on 128 reviews" },
+  { label: "Total Sales", value: "84,500 HUF", trend: "+12.5%", icon: "payments", color: "text-primary bg-primary/10" },
+  { label: "Profile Views", value: "1,240", trend: "+8.2%", icon: "visibility", color: "text-secondary bg-secondary/10" },
+  { label: "Active Listings", value: "8", trend: "0%", icon: "inventory_2", color: "text-tertiary bg-tertiary/10" },
+  { label: "Avg. Rating", value: "4.9", trend: "+0.1", icon: "star", color: "text-tertiary bg-tertiary/10" },
 ];
 
+const salesData = [3200, 4500, 2100, 8900, 5400, 7200, 6100]; // Weekly sales
+const maxSales = Math.max(...salesData);
+
+const engagementData = [
+  { day: "Mon", views: 120 },
+  { day: "Tue", views: 180 },
+  { day: "Wed", views: 150 },
+  { day: "Thu", views: 240 },
+  { day: "Fri", views: 320 },
+  { day: "Sat", views: 280 },
+  { day: "Sun", views: 190 },
+];
+const maxViews = Math.max(...engagementData.map(d => d.views));
+
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 },
+  },
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
+  },
+};
+
 export default function AnalyticsPage() {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  // Simulate data fetching
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoaded(true), 500);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <div className="px-6 md:px-12 py-8 max-w-6xl mx-auto space-y-10">
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants}
+      className="px-6 md:px-12 py-10 max-w-6xl mx-auto space-y-10"
+    >
       {/* Header */}
-      <section className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+      <motion.section variants={itemVariants} className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h1 className="font-headline text-3xl md:text-4xl font-bold text-on-surface mb-2 tracking-tight">
-            Analytics Overview
+          <h1 className="font-headline text-3xl font-extrabold tracking-tight text-on-surface mb-2">
+            Analytics
           </h1>
           <p className="font-body text-on-surface-variant text-base">
-            Track your performance and marketplace engagement.
+            Track your performance, sales, and community engagement.
           </p>
         </div>
-        <div className="bg-surface-container-lowest rounded-full px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-surface-container-low transition-colors w-fit">
-          <Icon name="calendar_month" className="text-primary" />
-          <span className="font-label font-medium text-sm text-on-surface">Last 30 Days</span>
-          <Icon name="expand_more" className="text-outline" size={18} />
+        <div className="flex gap-2 bg-surface-container-low p-1 rounded-xl">
+          {['7D', '1M', '3M', '1Y'].map((range) => (
+            <button key={range} className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${range === '7D' ? 'bg-primary text-on-primary shadow-sm' : 'text-on-surface-variant hover:bg-surface-container-high'}`}>
+              {range}
+            </button>
+          ))}
         </div>
-      </section>
+      </motion.section>
 
       {/* KPI Grid */}
-      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {kpis.map((kpi) => (
-          <div
-            key={kpi.label}
-            className="bg-surface-container-lowest p-6 rounded-xl relative overflow-hidden group"
-          >
-            <div className="absolute -right-6 -top-6 w-24 h-24 bg-primary/5 rounded-full blur-2xl group-hover:bg-primary/10 transition-colors duration-500" />
-            <div className="flex justify-between items-start mb-4">
-              <p className="font-label font-medium text-on-surface-variant text-sm uppercase tracking-wider">
-                {kpi.label}
-              </p>
-              <div className={`w-8 h-8 rounded-full ${kpi.iconBg} flex items-center justify-center ${kpi.iconColor}`}>
-                <Icon name={kpi.icon} filled={kpi.icon === "kid_star"} size={18} />
-              </div>
+      <motion.section variants={itemVariants} className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+        {kpis.map((kpi, i) => (
+          <div key={i} className="bg-surface-container-lowest p-6 rounded-3xl shadow-sm hover:shadow-md transition-shadow border border-outline-variant/5">
+            <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-4 ${kpi.color}`}>
+              <Icon name={kpi.icon} size={20} />
             </div>
-            <h3 className="font-headline text-3xl font-bold text-on-surface mb-2">
-              {kpi.value}
-              {kpi.decimal && <span className="text-lg text-outline font-normal">{kpi.decimal}</span>}
-            </h3>
-            <div className="flex items-center gap-2">
-              {kpi.trend && (
-                <span className={`px-2 py-0.5 rounded text-xs font-semibold flex items-center gap-1 ${
-                  kpi.trendUp ? "bg-primary/10 text-primary" : "bg-error/10 text-error"
-                }`}>
-                  <Icon name={kpi.trendUp ? "trending_up" : "trending_down"} size={10} />
-                  {kpi.trend}
-                </span>
-              )}
-              <span className="font-body text-xs text-outline">{kpi.trendLabel}</span>
+            <p className="font-label text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-1">
+              {kpi.label}
+            </p>
+            <div className="flex items-baseline justify-between">
+              <span className="font-headline text-xl font-bold text-on-surface">{kpi.value}</span>
+              <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-md ${
+                kpi.trend.startsWith('+') ? 'text-primary bg-primary/10' : 'text-on-surface-variant bg-surface-container'
+              }`}>
+                {kpi.trend}
+              </span>
             </div>
           </div>
         ))}
-      </section>
+      </motion.section>
 
-      {/* Placeholder Charts */}
-      <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-surface-container-lowest p-6 rounded-xl">
-          <h3 className="font-headline font-bold text-lg text-on-surface mb-4">Revenue Trend</h3>
-          <div className="h-48 bg-surface-container-low rounded-xl flex items-center justify-center text-on-surface-variant">
-            <div className="text-center">
-              <Icon name="show_chart" size={40} className="opacity-30 mb-2" />
-              <p className="text-sm font-body">Chart visualization coming soon</p>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Sales Chart */}
+        <motion.section variants={itemVariants} className="bg-surface-container-lowest p-8 rounded-3xl shadow-sm border border-outline-variant/5">
+          <div className="flex justify-between items-center mb-10">
+            <div>
+              <h3 className="font-headline text-lg font-bold text-on-surface">Revenue Growth</h3>
+              <p className="font-body text-xs text-on-surface-variant">Daily earnings this week</p>
+            </div>
+            <div className="flex gap-2">
+              <span className="w-3 h-3 rounded-full bg-primary" />
+              <span className="font-label text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Weekly</span>
             </div>
           </div>
-        </div>
-        <div className="bg-surface-container-lowest p-6 rounded-xl">
-          <h3 className="font-headline font-bold text-lg text-on-surface mb-4">Category Breakdown</h3>
-          <div className="h-48 bg-surface-container-low rounded-xl flex items-center justify-center text-on-surface-variant">
-            <div className="text-center">
-              <Icon name="donut_large" size={40} className="opacity-30 mb-2" />
-              <p className="text-sm font-body">Chart visualization coming soon</p>
+          <div className="h-64 flex items-end justify-between gap-4 px-2 relative">
+            {/* Grid lines */}
+            <div className="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-5">
+              {[1, 2, 3, 4].map(l => <div key={l} className="w-full h-px bg-on-surface" />)}
+            </div>
+            {salesData.map((val, i) => (
+              <div key={i} className="flex-1 flex flex-col items-center gap-4 group relative z-10">
+                <div className="relative w-full flex justify-center items-end h-full">
+                  <motion.div
+                    initial={{ height: 0 }}
+                    animate={{ height: isLoaded ? `${Math.max((val / maxSales) * 100, 5)}%` : 0 }}
+                    transition={{ duration: 1, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                    className="w-full max-w-[40px] bg-linear-to-t from-primary to-primary-container rounded-t-xl group-hover:brightness-110 transition-all relative"
+                  >
+                    <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-on-surface text-surface-container-lowest text-[10px] font-bold px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity shadow-lg pointer-events-none whitespace-nowrap">
+                      {val.toLocaleString()} HUF
+                    </div>
+                  </motion.div>
+                </div>
+                <span className="font-label text-[10px] font-bold text-on-surface-variant uppercase">
+                  {['M', 'T', 'W', 'T', 'F', 'S', 'S'][i]}
+                </span>
+              </div>
+            ))}
+          </div>
+        </motion.section>
+
+        {/* Engagement Chart */}
+        <motion.section variants={itemVariants} className="bg-surface-container-lowest p-8 rounded-3xl shadow-sm border border-outline-variant/5">
+          <div className="flex justify-between items-center mb-10">
+            <div>
+              <h3 className="font-headline text-lg font-bold text-on-surface">Engagement Flow</h3>
+              <p className="font-body text-xs text-on-surface-variant">Profile interaction trends</p>
+            </div>
+            <div className="flex gap-2">
+              <span className="w-3 h-3 rounded-full bg-secondary" />
+              <span className="font-label text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Profile Views</span>
             </div>
           </div>
-        </div>
-      </section>
-    </div>
+          <div className="h-64 flex items-end justify-between gap-4 px-2 relative">
+            <div className="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-5">
+              {[1, 2, 3, 4].map(l => <div key={l} className="w-full h-px bg-on-surface" />)}
+            </div>
+            {engagementData.map((d, i) => (
+              <div key={i} className="flex-1 flex flex-col items-center gap-4 group relative z-10">
+                <div className="relative w-full flex justify-center items-end h-full">
+                  <motion.div
+                    initial={{ height: 0 }}
+                    animate={{ height: isLoaded ? `${Math.max((d.views / maxViews) * 100, 5)}%` : 0 }}
+                    transition={{ duration: 1, delay: i * 0.1 + 0.3, ease: [0.16, 1, 0.3, 1] }}
+                    className="w-full max-w-[40px] bg-linear-to-t from-secondary to-secondary-container rounded-t-xl group-hover:brightness-110 transition-all relative"
+                  >
+                    <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-on-surface text-surface-container-lowest text-[10px] font-bold px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity shadow-lg pointer-events-none whitespace-nowrap">
+                      {d.views} views
+                    </div>
+                  </motion.div>
+                </div>
+                <span className="font-label text-[10px] font-bold text-on-surface-variant uppercase">
+                  {d.day}
+                </span>
+              </div>
+            ))}
+          </div>
+        </motion.section>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Top Performers */}
+        <motion.section variants={itemVariants} className="lg:col-span-2">
+          <h3 className="font-headline text-lg font-bold text-on-surface mb-6">Top Performing Listings</h3>
+          <div className="space-y-3">
+            {[
+              { title: "Organic Chemistry II", sales: 4, revenue: "60,000 HUF", views: 245, image: "/images/listing_textbook.png" },
+              { title: "Sony Noise Cancelling Headphones", sales: 1, revenue: "45,000 HUF", views: 890, image: "/images/listing_textbook.png" },
+              { title: "Kitchen Essentials Bundle", sales: 2, revenue: "12,000 HUF", views: 156, image: "/images/listing_textbook.png" },
+            ].map((item, i) => (
+              <div key={i} className="flex items-center justify-between p-4 bg-surface-container-lowest rounded-2xl border border-outline-variant/5 hover:border-outline-variant/20 hover:bg-surface-container-low transition-all group">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-xl bg-surface-container overflow-hidden shrink-0">
+                    <img src={item.image} alt="" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                  </div>
+                  <div>
+                    <p className="font-headline text-sm font-bold text-on-surface">{item.title}</p>
+                    <p className="font-body text-xs text-on-surface-variant">{item.views} views • {item.sales} sold</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <p className="font-headline text-sm font-bold text-primary">{item.revenue}</p>
+                  <p className="font-label text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Revenue</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </motion.section>
+
+        {/* Recent Transactions */}
+        <motion.section variants={itemVariants}>
+          <h3 className="font-headline text-lg font-bold text-on-surface mb-6">Recent Sales</h3>
+          <div className="bg-surface-container-lowest rounded-3xl p-6 border border-outline-variant/5 space-y-6">
+            {[
+              { user: "Sarah J.", amount: "+3,200", status: "Completed", time: "2h ago" },
+              { user: "Kevin M.", amount: "+15,000", status: "Pending", time: "5h ago" },
+              { user: "Elena R.", amount: "+2,900", status: "Completed", time: "1d ago" },
+              { user: "Mark T.", amount: "+1,500", status: "Refunded", time: "2d ago" },
+            ].map((tx, i) => (
+              <div key={i} className="flex items-center justify-between group">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-[10px]">
+                    {tx.user.charAt(0)}
+                  </div>
+                  <div>
+                    <p className="font-headline text-xs font-bold text-on-surface">{tx.user}</p>
+                    <p className="text-[10px] text-on-surface-variant">{tx.time}</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <p className="font-headline text-xs font-bold text-primary">{tx.amount} HUF</p>
+                  <p className={`text-[10px] font-bold ${
+                    tx.status === 'Completed' ? 'text-primary' : tx.status === 'Pending' ? 'text-secondary' : 'text-error'
+                  }`}>
+                    {tx.status}
+                  </p>
+                </div>
+              </div>
+            ))}
+            <button className="w-full py-2 rounded-xl bg-surface-container-low text-on-surface-variant font-label text-[10px] font-bold uppercase tracking-widest hover:bg-surface-container-high transition-colors">
+              View All Transactions
+            </button>
+          </div>
+        </motion.section>
+      </div>
+    </motion.div>
   );
 }
+
