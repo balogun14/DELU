@@ -1,11 +1,9 @@
+"use client";
+
 import Icon from "@/app/components/shared/Icon";
 import Link from "next/link";
 import { foodItems, foodCategories } from "@/lib/mock/food";
 
-export const metadata = {
-  title: "Food Marketplace",
-  description: "Discover homemade campus bites, baked goods, and cultural dishes from verified student chefs on ADEL.",
-};
 
 export default function FoodMarketplacePage() {
   const featured = foodItems.find((f) => f.featured);
