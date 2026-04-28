@@ -123,5 +123,20 @@ export const bundles: Bundle[] = [
     views: 280,
     favorites: 15,
   },
+  {
+    id: "bundle-3",
+    title: " Azerbaijani carpet",
+    description: "Silk embroidery, 17th–18th century. In the collections of the Textile Museum (Washington, D.C.) ",
+    price: 200000,
+    currency: "HUF",
+    image: "https://upload.wikimedia.org/wikipedia/commons/7/71/Silk_embroidery%2C_greater_Azerbaijan%2C_17th-18th_century.jpg",
+    category: "Dorm Gear",
+    condition: "Used",
+    seller: { name: "Mark K.", avatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuBLsnGnOj3MrsObMyjEpMfbt60peEF_LwgcrKMjeIxWhycJmmyl4eaMHGNjePW_bF9lM0h_mixZahz_4nagcL6ItOgsydz75fpNTtRJ3vaOFvS8oFWxktDCbQCHQAYkUM2hXvGZ1rfndApli9XlCxZdlWM0wsyuO4JnyNXBoU9UiGpCCU8weu2i2oLFn9CMzX5N-BMwEzt_NvOMP2Zlfi9romEnpH8xPSnLiXkTi84UV8K5FowDDkXRnuCzFNT899gV8unnRi7KKHre", rating: 4.7, reviews: 9, verified: true },
+    badge: "Hot Deal",
+    tags: ["Dorm Gear",],
+    views: 2906,
+    favorites: 44,
+  },
 ];
 
