@@ -168,7 +168,7 @@ export default function SellNewPage() {
                   if (step < steps.length - 1) setStep(step + 1);
                 }}
                 disabled={step === 0 && !selectedCategory}
-                className="py-3 px-8 rounded-full bg-gradient-to-r from-primary to-primary-dim text-white font-headline font-semibold hover:brightness-110 active:scale-[0.98] transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="py-3 px-8 rounded-full bg-linear-to-r from-primary to-primary-dim text-white font-headline font-semibold hover:brightness-110 active:scale-[0.98] transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 style={{ boxShadow: "0 4px 14px rgba(0,105,71,0.2)" }}
               >
                 {step === steps.length - 1 ? "Publish Listing" : "Continue"}
