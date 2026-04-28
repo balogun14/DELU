@@ -1,1 +1,166 @@
 @import "tailwindcss";
+
+/* ─── ADEL Design System: "The Academic Curator" ─── */
+
+@theme {
+  /* ── Primary (Trustworthy Emerald) ── */
+  --color-primary: #006947;
+  --color-primary-dim: #005c3d;
+  --color-primary-container: #69f6b8;
+  --color-primary-fixed: #69f6b8;
+  --color-primary-fixed-dim: #58e7ab;
+  --color-on-primary: #c8ffe0;
+  --color-on-primary-container: #005a3c;
+  --color-on-primary-fixed: #00452d;
+  --color-on-primary-fixed-variant: #006544;
+  --color-inverse-primary: #69f6b8;
+
+  /* ── Secondary (Energetic Electric Blue) ── */
+  --color-secondary: #0050d4;
+  --color-secondary-dim: #0046bb;
+  --color-secondary-container: #c4d0ff;
+  --color-secondary-fixed: #c4d0ff;
+  --color-secondary-fixed-dim: #b0c2ff;
+  --color-on-secondary: #f1f2ff;
+  --color-on-secondary-container: #003ea9;
+  --color-on-secondary-fixed: #002d80;
+  --color-on-secondary-fixed-variant: #0047bd;
+
+  /* ── Tertiary (Warmth / Food) ── */
+  --color-tertiary: #815100;
+  --color-tertiary-dim: #714600;
+  --color-tertiary-container: #f8a010;
+  --color-tertiary-fixed: #f8a010;
+  --color-tertiary-fixed-dim: #e79400;
+  --color-on-tertiary: #fff0e3;
+  --color-on-tertiary-container: #4a2c00;
+  --color-on-tertiary-fixed: #2a1700;
+  --color-on-tertiary-fixed-variant: #563400;
+
+  /* ── Error ── */
+  --color-error: #b31b25;
+  --color-error-dim: #9f0519;
+  --color-error-container: #fb5151;
+  --color-on-error: #ffefee;
+  --color-on-error-container: #570008;
+
+  /* ── Surfaces ── */
+  --color-background: #f5f7f9;
+  --color-on-background: #2c2f31;
+  --color-surface: #f5f7f9;
+  --color-surface-bright: #f5f7f9;
+  --color-surface-dim: #d0d5d8;
+  --color-surface-variant: #d9dde0;
+  --color-surface-tint: #006947;
+  --color-on-surface: #2c2f31;
+  --color-on-surface-variant: #595c5e;
+  --color-inverse-surface: #0b0f10;
+  --color-inverse-on-surface: #9a9d9f;
+
+  /* ── Surface Containers (Tonal Layering) ── */
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #eef1f3;
+  --color-surface-container: #e5e9eb;
+  --color-surface-container-high: #dfe3e6;
+  --color-surface-container-highest: #d9dde0;
+
+  /* ── Outline ── */
+  --color-outline: #747779;
+  --color-outline-variant: #abadaf;
+
+  /* ── Typography (Dual-Typeface Strategy) ── */
+  --font-headline: "Plus Jakarta Sans", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-label: "Inter", sans-serif;
+
+  /* ── Border Radius ── */
+  --radius-DEFAULT: 0.25rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
+  --radius-full: 9999px;
+}
+
+/* ─── Base Styles ─── */
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-background);
+  color: var(--color-on-background);
+}
+
+h1, h2, h3, h4, h5, h6,
+.font-headline {
+  font-family: var(--font-headline);
+}
+
+/* ─── Glassmorphism Utilities ─── */
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.glass-badge {
+  background: rgba(105, 246, 184, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(105, 246, 184, 0.3);
+}
+
+/* ─── Material Symbols ─── */
+
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+.material-symbols-outlined.filled,
+.filled-icon {
+  font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+/* ─── Scrollbar Utilities ─── */
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ─── Gradient Text ─── */
+
+.gradient-text {
+  background: linear-gradient(135deg, #006947 0%, #0050d4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Safe Area (Mobile) ─── */
+
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* ─── Chat Animations ─── */
+
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
