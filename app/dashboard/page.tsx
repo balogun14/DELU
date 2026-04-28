@@ -2,7 +2,7 @@
 
 import Icon from "@/app/components/shared/Icon";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 const pillars = [
   {
@@ -38,7 +38,7 @@ const trending = [
   { title: "Sony WH-1000XM4", price: "65,000 HUF", tag: "Products", time: "6h ago" },
 ];
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -48,7 +48,7 @@ const containerVariants = {
   },
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
