@@ -49,7 +49,7 @@ export default function MyListingsPage() {
         </div>
         <Link
           href="/sell/new"
-          className="shrink-0 inline-flex items-center gap-2 py-3 px-6 rounded-full bg-gradient-to-br from-secondary to-secondary-dim text-white font-headline font-semibold hover:brightness-110 active:scale-95 transition-all"
+          className="shrink-0 inline-flex items-center gap-2 py-3 px-6 rounded-full bg-linear-to-br from-secondary to-secondary-dim text-white font-headline font-semibold hover:brightness-110 active:scale-95 transition-all"
           style={{ boxShadow: "0 4px 14px rgba(0,80,212,0.2)" }}
         >
           <Icon name="add_circle" size={18} />
@@ -86,7 +86,7 @@ export default function MyListingsPage() {
             const isPending = lst.status === "Pending Approval";
             return (
               <div key={lst.id} className="group">
-                <Link href={`/marketplace/items/${lst.id}`} className="block bg-surface-container-lowest rounded-2xl overflow-hidden flex flex-col group hover:translate-y-[-4px] transition-all duration-300 shadow-sm hover:shadow-md h-full"
+                <Link href={`/marketplace/items/${lst.id}`} className="bg-surface-container-lowest rounded-2xl overflow-hidden flex flex-col group hover:translate-y-[-4px] transition-all duration-300 shadow-sm hover:shadow-md h-full"
                   style={isFood ? { border: "1px solid rgba(248,160,16,0.1)" } : { border: "1px solid rgba(0,0,0,0.03)" }}
                 >
                   <div className="h-48 relative overflow-hidden bg-surface-container">
