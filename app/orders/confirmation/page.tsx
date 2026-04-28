@@ -55,7 +55,7 @@ export default function OrderConfirmationPage() {
               <div className="w-16 h-16 rounded-xl overflow-hidden mr-4 shrink-0 bg-tertiary-container/20 flex items-center justify-center text-tertiary">
                 <Icon name="restaurant" filled size={28} />
               </div>
-              <div className="flex-grow">
+              <div className="grow">
                 <div className="flex justify-between items-start mb-1">
                   <h3 className="font-headline font-bold text-on-surface">Authentic Jollof Rice</h3>
                   <p className="font-headline font-bold text-on-surface">3,450 HUF</p>
@@ -103,7 +103,7 @@ export default function OrderConfirmationPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Link
             href="/dashboard"
-            className="w-full py-4 px-6 rounded-full bg-gradient-to-br from-primary to-primary-dim text-on-primary font-headline font-bold flex items-center justify-center group hover:brightness-110 active:scale-95 transition-all"
+            className="w-full py-4 px-6 rounded-full bg-linear-to-br from-primary to-primary-dim text-on-primary font-headline font-bold flex items-center justify-center group hover:brightness-110 active:scale-95 transition-all"
             style={{ boxShadow: "0 8px 16px rgba(0,105,71,0.15)" }}
           >
             View Order Status
