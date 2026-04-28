@@ -9,7 +9,7 @@ export default function LoginPage() {
       style={{ boxShadow: "0 8px 32px rgba(0,0,0,0.04)" }}
     >
       {/* Left Side: Editorial Panel */}
-      <div className="w-full lg:w-1/2 relative hidden lg:block overflow-hidden bg-gradient-to-br from-primary via-primary-dim to-primary">
+      <div className="w-full lg:w-1/2 relative hidden lg:block overflow-hidden bg-linear-to-br from-primary via-primary-dim to-primary">
         <div className="absolute inset-0 opacity-20 mix-blend-overlay">
           <div className="w-full h-full bg-[url('/mock/campus.jpg')] bg-cover bg-center" />
         </div>
@@ -107,7 +107,7 @@ export default function LoginPage() {
 
             <button
               type="submit"
-              className="w-full py-4 px-6 rounded-full bg-gradient-to-r from-primary to-primary-dim text-white font-headline font-semibold text-lg hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full py-4 px-6 rounded-full bg-linear-to-r from-primary to-primary-dim text-white font-headline font-semibold text-lg hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer"
               style={{ boxShadow: "0 4px 14px rgba(0,105,71,0.2)" }}
             >
               Sign in with University Email
