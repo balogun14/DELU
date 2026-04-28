@@ -57,6 +57,18 @@ export const foodItems: FoodItem[] = [
     seller: { name: "Yuki N.", avatar: "/mock/avatar-yuki.jpg", rating: 4.9, reviews: 12 },
     availability: "Available now",
   },
+  {
+    id: "food-5",
+    title: "Halal Meat",
+    price: 3900,
+    currency: "HUF",
+    image: "https://i.pinimg.com/1200x/6a/52/9f/6a529f4e06359da06daa47a18e871d2a.jpg",
+    tags: ["Fresh","Halal"],
+    description: "Finding halal lamb and beef has never been easier. The only place for the highest quality, freshest, and most delicious meats.",
+    seller: { name: "Joseph N.", avatar: "/mock/avatar-yuki.jpg", rating: 4.3, reviews: 462 },
+    availability: "Available now",
+  },
+
 ];
 
 
