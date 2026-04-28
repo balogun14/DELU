@@ -192,7 +192,7 @@ export default function CartPage() {
                 <Link
                   href="/orders/confirmation"
                   onClick={() => clearCart()}
-                  className={`w-full py-4 rounded-full bg-gradient-to-r from-primary to-primary-dim text-white font-headline font-semibold text-lg hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2 ${
+                  className={`w-full py-4 rounded-full bg-linear-to-r from-primary to-primary-dim text-white font-headline font-semibold text-lg hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2 ${
                     items.length === 0 ? "opacity-50 pointer-events-none" : ""
                   }`}
                   style={{ boxShadow: items.length > 0 ? "0 4px 14px rgba(0,105,71,0.2)" : "none" }}
